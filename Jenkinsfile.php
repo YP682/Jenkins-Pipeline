@@ -4,81 +4,58 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building...'
-                // Use 'bat' for Windows commands if on Windows
-                bat 'mvn clean package'
+                echo 'Task: Build the code using a build automation tool (e.g., Maven).'
+                echo 'Tool: Maven'
+                // Actual command implementation commented out
+                // bat 'mvn clean package'
             }
         }
         stage('Unit and Integration Tests') {
             steps {
-                echo 'Running Unit and Integration Tests...'
-                bat 'mvn test'
-            }
-            post {
-                success {
-                    script {
-                        def log = currentBuild.getLog().join("\n")
-                        mail to: 'ypokia07@gmail.com',
-                            subject: "Unit and Integration Tests Successful",
-                            body: "The unit and integration tests completed successfully.\n\nHere are the logs:\n${log}"
-                    }
-                }
-                failure {
-                    script {
-                        def log = currentBuild.getLog().join("\n")
-                        mail to: 'ypokia07@gmail.com',
-                            subject: "Unit and Integration Tests Failed",
-                            body: "The unit and integration tests failed. Please check the logs.\n\nHere are the logs:\n${log}"
-                    }
-                }
+                echo 'Task: Run unit and integration tests.'
+                echo 'Tool: JUnit for unit tests, TestNG for integration tests'
+                // Actual command implementation commented out
+                // bat 'mvn test'
             }
         }
         stage('Code Analysis') {
             steps {
-                echo 'Performing Code Analysis...'
-                bat 'sonar-scanner'
+                echo 'Task: Perform code analysis to ensure code meets industry standards.'
+                echo 'Tool: SonarQube'
+                // Actual command implementation commented out
+                // bat 'sonar-scanner'
             }
         }
         stage('Security Scan') {
             steps {
-                echo 'Running Security Scan...'
-                bat './dependency-check.sh'
-            }
-            post {
-                success {
-                    script {
-                        def log = currentBuild.getLog().join("\n")
-                        mail to: 'ypokia07@gmail.com',
-                            subject: "Security Scan Successful",
-                            body: "The security scan completed successfully.\n\nHere are the logs:\n${log}"
-                    }
-                }
-                failure {
-                    script {
-                        def log = currentBuild.getLog().join("\n")
-                        mail to: 'ypokia07@gmail.com',
-                            subject: "Security Scan Failed",
-                            body: "The security scan failed. Please check the logs.\n\nHere are the logs:\n${log}"
-                    }
-                }
+                echo 'Task: Perform a security scan to identify vulnerabilities.'
+                echo 'Tool: OWASP Dependency-Check'
+                // Actual command implementation commented out
+                // bat './dependency-check.sh'
             }
         }
         stage('Deploy to Staging') {
             steps {
-                echo 'Deploying to Staging...'
-                bat 'aws deploy'
+                echo 'Task: Deploy the application to a staging server.'
+                echo 'Tool: AWS CLI'
+                // Actual command implementation commented out
+                // bat 'aws deploy'
             }
         }
         stage('Integration Tests on Staging') {
             steps {
-                echo 'Running Integration Tests on Staging...'
-                bat 'mvn verify'
+                echo 'Task: Run integration tests on the staging environment.'
+                echo 'Tool: Selenium'
+                // Actual command implementation commented out
+                // bat 'mvn verify'
             }
         }
         stage('Deploy to Production') {
             steps {
-                echo 'Deploying to Production...'
-                bat 'aws deploy'
+                echo 'Task: Deploy the application to the production server.'
+                echo 'Tool: AWS CLI'
+                // Actual command implementation commented out
+                // bat 'aws deploy'
             }
         }
     }
@@ -89,18 +66,14 @@ pipeline {
         }
         success {
             script {
-                def log = currentBuild.getLog().join("\n")
-                mail to: 'ypokia07@gmail.com',
-                    subject: "Pipeline Successful: ${currentBuild.fullDisplayName}",
-                    body: "The pipeline has completed successfully.\n\nHere are the logs:\n${log}"
+                echo "Pipeline Successful: ${currentBuild.fullDisplayName}"
+                echo "No actual logs are available since this is a simulation of the pipeline steps."
             }
         }
         failure {
             script {
-                def log = currentBuild.getLog().join("\n")
-                mail to: 'ypokia07@gmail.com',
-                    subject: "Pipeline Failed: ${currentBuild.fullDisplayName}",
-                    body: "The pipeline has failed. Please check the logs.\n\nHere are the logs:\n${log}"
+                echo "Pipeline Failed: ${currentBuild.fullDisplayName}"
+                echo "No actual logs are available since this is a simulation of the pipeline steps."
             }
         }
     }
