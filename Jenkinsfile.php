@@ -12,28 +12,28 @@ pipeline {
             steps {
                 echo 'Task: Run unit and integration tests.'
                 echo 'Tool: JUnit for unit tests, TestNG for integration tests'
+                script {
+                    // Capture the log output to a file
+                    sh 'echo Unit and Integration Tests Log > unit_integration_tests_log.txt'
+                }
             }
             post {
                 success {
                     script {
-                        def logFile = "unit_integration_tests_log.txt"
-                        writeFile file: logFile, text: currentBuild.rawBuild.getLog(100).join("\n")
-                        archiveArtifacts artifacts: logFile, allowEmptyArchive: true
+                        archiveArtifacts artifacts: 'unit_integration_tests_log.txt', allowEmptyArchive: true
                         mail to: 'ypokia07@gmail.com',
                             subject: "Unit and Integration Tests Successful",
                             body: "The unit and integration tests completed successfully. Please find the logs attached.",
-                            attachmentsPattern: logFile
+                            attachmentsPattern: 'unit_integration_tests_log.txt'
                     }
                 }
                 failure {
                     script {
-                        def logFile = "unit_integration_tests_log.txt"
-                        writeFile file: logFile, text: currentBuild.rawBuild.getLog(100).join("\n")
-                        archiveArtifacts artifacts: logFile, allowEmptyArchive: true
+                        archiveArtifacts artifacts: 'unit_integration_tests_log.txt', allowEmptyArchive: true
                         mail to: 'ypokia07@gmail.com',
                             subject: "Unit and Integration Tests Failed",
                             body: "The unit and integration tests failed. Please find the logs attached.",
-                            attachmentsPattern: logFile
+                            attachmentsPattern: 'unit_integration_tests_log.txt'
                     }
                 }
             }
@@ -48,28 +48,28 @@ pipeline {
             steps {
                 echo 'Task: Perform a security scan to identify vulnerabilities.'
                 echo 'Tool: OWASP Dependency-Check'
+                script {
+                    // Capture the log output to a file
+                    sh 'echo Security Scan Log > security_scan_log.txt'
+                }
             }
             post {
                 success {
                     script {
-                        def logFile = "security_scan_log.txt"
-                        writeFile file: logFile, text: currentBuild.rawBuild.getLog(100).join("\n")
-                        archiveArtifacts artifacts: logFile, allowEmptyArchive: true
+                        archiveArtifacts artifacts: 'security_scan_log.txt', allowEmptyArchive: true
                         mail to: 'ypokia07@gmail.com',
                             subject: "Security Scan Successful",
                             body: "The security scan completed successfully. Please find the logs attached.",
-                            attachmentsPattern: logFile
+                            attachmentsPattern: 'security_scan_log.txt'
                     }
                 }
                 failure {
                     script {
-                        def logFile = "security_scan_log.txt"
-                        writeFile file: logFile, text: currentBuild.rawBuild.getLog(100).join("\n")
-                        archiveArtifacts artifacts: logFile, allowEmptyArchive: true
+                        archiveArtifacts artifacts: 'security_scan_log.txt', allowEmptyArchive: true
                         mail to: 'ypokia07@gmail.com',
                             subject: "Security Scan Failed",
                             body: "The security scan failed. Please find the logs attached.",
-                            attachmentsPattern: logFile
+                            attachmentsPattern: 'security_scan_log.txt'
                     }
                 }
             }
