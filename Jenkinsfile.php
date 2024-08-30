@@ -1,32 +1,101 @@
-pipeline{
+pipeline {
     agent any
-    stages{
-        stage("Build"){
-            steps{
-                echo "Building ..."
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building...'
+                // Example for Maven
+                sh 'mvn clean package'
             }
-            post{
-                success{
-                    mail to: "ypokia07@gmail.com",
-                    subject: "Build Status Email",
-                    body: "Build was successful!"
+        }
+        stage('Unit and Integration Tests') {
+            steps {
+                echo 'Running Unit and Integration Tests...'
+                // Example for Maven
+                sh 'mvn test'
+            }
+            post {
+                success {
+                    mail to: 'ypokia07@gmail.com',
+                        subject: "Unit and Integration Tests Successful",
+                        body: "The unit and integration tests completed successfully.",
+                        attachLog: true
+                }
+                failure {
+                    mail to: 'ypokia07@gmail.com',
+                        subject: "Unit and Integration Tests Failed",
+                        body: "The unit and integration tests failed. Please check the logs.",
+                        attachLog: true
                 }
             }
         }
-        stage("Test"){
-            steps{
-                echo "Testing ..."
+        stage('Code Analysis') {
+            steps {
+                echo 'Performing Code Analysis...'
+                // Example for SonarQube
+                sh 'sonar-scanner'
             }
         }
-        stage("Deploy"){
-            steps{
-                echo "Deploying ..."
+        stage('Security Scan') {
+            steps {
+                echo 'Running Security Scan...'
+                // Example for OWASP Dependency-Check
+                sh './dependency-check.sh'
+            }
+            post {
+                success {
+                    mail to: 'ypokia07@gmail.com',
+                        subject: "Security Scan Successful",
+                        body: "The security scan completed successfully.",
+                        attachLog: true
+                }
+                failure {
+                    mail to: 'ypokia07@gmail.com',
+                        subject: "Security Scan Failed",
+                        body: "The security scan failed. Please check the logs.",
+                        attachLog: true
+                }
             }
         }
-        stage("Complete"){
-            steps{
-                echo "Completed"
+        stage('Deploy to Staging') {
+            steps {
+                echo 'Deploying to Staging...'
+                // Example deployment command
+                sh 'aws deploy'
             }
+        }
+        stage('Integration Tests on Staging') {
+            steps {
+                echo 'Running Integration Tests on Staging...'
+                // Example for Selenium
+                sh 'mvn verify'
+            }
+        }
+        stage('Deploy to Production') {
+            steps {
+                echo 'Deploying to Production...'
+                // Example deployment command
+                sh 'aws deploy'
+            }
+        }
+    }
+    
+    post {
+        always {
+            echo 'Pipeline completed.'
+        }
+        success {
+            mail to: 'ypokia07@gmail.com',
+                 subject: "Pipeline Successful: ${currentBuild.fullDisplayName}",
+                 body: "The pipeline has completed successfully.",
+                 attachLog: true
+        }
+        failure {
+            mail to: 'ypokia07@gmail.com',
+                 subject: "Pipeline Failed: ${currentBuild.fullDisplayName}",
+                 body: "The pipeline has failed. Please check the logs.",
+                 attachLog: true
         }
     }
 }
