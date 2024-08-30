@@ -17,16 +17,20 @@ pipeline {
             }
             post {
                 success {
-                    mail to: 'ypokia07@gmail.com',
-                        subject: "Unit and Integration Tests Successful",
-                        body: "The unit and integration tests completed successfully.",
-                        attachLog: true
+                    script {
+                        def log = currentBuild.rawBuild.getLog(100).join("\n")
+                        mail to: 'ypokia07@gmail.com',
+                            subject: "Unit and Integration Tests Successful",
+                            body: "The unit and integration tests completed successfully.\n\nHere are the last 100 lines of the log:\n${log}"
+                    }
                 }
                 failure {
-                    mail to: 'ypokia07@gmail.com',
-                        subject: "Unit and Integration Tests Failed",
-                        body: "The unit and integration tests failed. Please check the logs.",
-                        attachLog: true
+                    script {
+                        def log = currentBuild.rawBuild.getLog(100).join("\n")
+                        mail to: 'ypokia07@gmail.com',
+                            subject: "Unit and Integration Tests Failed",
+                            body: "The unit and integration tests failed. Please check the logs.\n\nHere are the last 100 lines of the log:\n${log}"
+                    }
                 }
             }
         }
@@ -45,16 +49,20 @@ pipeline {
             }
             post {
                 success {
-                    mail to: 'ypokia07@gmail.com',
-                        subject: "Security Scan Successful",
-                        body: "The security scan completed successfully.",
-                        attachLog: true
+                    script {
+                        def log = currentBuild.rawBuild.getLog(100).join("\n")
+                        mail to: 'ypokia07@gmail.com',
+                            subject: "Security Scan Successful",
+                            body: "The security scan completed successfully.\n\nHere are the last 100 lines of the log:\n${log}"
+                    }
                 }
                 failure {
-                    mail to: 'ypokia07@gmail.com',
-                        subject: "Security Scan Failed",
-                        body: "The security scan failed. Please check the logs.",
-                        attachLog: true
+                    script {
+                        def log = currentBuild.rawBuild.getLog(100).join("\n")
+                        mail to: 'ypokia07@gmail.com',
+                            subject: "Security Scan Failed",
+                            body: "The security scan failed. Please check the logs.\n\nHere are the last 100 lines of the log:\n${log}"
+                    }
                 }
             }
         }
@@ -86,16 +94,9 @@ pipeline {
             echo 'Pipeline completed.'
         }
         success {
-            mail to: 'ypokia07@gmail.com',
-                 subject: "Pipeline Successful: ${currentBuild.fullDisplayName}",
-                 body: "The pipeline has completed successfully.",
-                 attachLog: true
-        }
-        failure {
-            mail to: 'ypokia07@gmail.com',
-                 subject: "Pipeline Failed: ${currentBuild.fullDisplayName}",
-                 body: "The pipeline has failed. Please check the logs.",
-                 attachLog: true
-        }
-    }
-}
+            script {
+                def log = currentBuild.rawBuild.getLog(100).join("\n")
+                mail to: 'ypokia07@gmail.com',
+                    subject: "Pipeline Successful: ${currentBuild.fullDisplayName}",
+                    body: "The pipeline has completed successfully.\n\nHere are the last 100 lines of the log:\n${log}"
+            }
