@@ -100,3 +100,14 @@ pipeline {
                     subject: "Pipeline Successful: ${currentBuild.fullDisplayName}",
                     body: "The pipeline has completed successfully.\n\nHere are the last 100 lines of the log:\n${log}"
             }
+        }
+        failure {
+            script {
+                def log = currentBuild.rawBuild.getLog(100).join("\n")
+                mail to: 'ypokia07@gmail.com',
+                    subject: "Pipeline Failed: ${currentBuild.fullDisplayName}",
+                    body: "The pipeline has failed. Please check the logs.\n\nHere are the last 100 lines of the log:\n${log}"
+            }
+        }
+    }
+}
