@@ -21,19 +21,19 @@ pipeline {
                 success {
                     script {
                         archiveArtifacts artifacts: 'unit_integration_tests_log.txt', allowEmptyArchive: true
-                        emailext to: 'ypokia07@gmail.com',
-                            subject: "Unit and Integration Tests Successful",
-                            body: "The unit and integration tests completed successfully. Please find the logs attached.",
-                            attachmentsPattern: 'unit_integration_tests_log.txt'
+                        mail to: 'ypokia07@gmail.com',
+                             subject: "Unit and Integration Tests Successful",
+                             body: "The unit and integration tests completed successfully. Please find the logs attached.",
+                             attachLog: true // This sends the console log as an attachment
                     }
                 }
                 failure {
                     script {
                         archiveArtifacts artifacts: 'unit_integration_tests_log.txt', allowEmptyArchive: true
-                        emailext to: 'ypokia07@gmail.com',
-                            subject: "Unit and Integration Tests Failed",
-                            body: "The unit and integration tests failed. Please find the logs attached.",
-                            attachmentsPattern: 'unit_integration_tests_log.txt'
+                        mail to: 'ypokia07@gmail.com',
+                             subject: "Unit and Integration Tests Failed",
+                             body: "The unit and integration tests failed. Please find the logs attached.",
+                             attachLog: true // This sends the console log as an attachment
                     }
                 }
             }
@@ -57,19 +57,19 @@ pipeline {
                 success {
                     script {
                         archiveArtifacts artifacts: 'security_scan_log.txt', allowEmptyArchive: true
-                        emailext to: 'ypokia07@gmail.com',
-                            subject: "Security Scan Successful",
-                            body: "The security scan completed successfully. Please find the logs attached.",
-                            attachmentsPattern: 'security_scan_log.txt'
+                        mail to: 'ypokia07@gmail.com',
+                             subject: "Security Scan Successful",
+                             body: "The security scan completed successfully. Please find the logs attached.",
+                             attachLog: true // This sends the console log as an attachment
                     }
                 }
                 failure {
                     script {
                         archiveArtifacts artifacts: 'security_scan_log.txt', allowEmptyArchive: true
-                        emailext to: 'ypokia07@gmail.com',
-                            subject: "Security Scan Failed",
-                            body: "The security scan failed. Please find the logs attached.",
-                            attachmentsPattern: 'security_scan_log.txt'
+                        mail to: 'ypokia07@gmail.com',
+                             subject: "Security Scan Failed",
+                             body: "The security scan failed. Please find the logs attached.",
+                             attachLog: true // This sends the console log as an attachment
                     }
                 }
             }
