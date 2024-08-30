@@ -16,18 +16,24 @@ pipeline {
             post {
                 success {
                     script {
-                        def log = "Simulated log output for Unit and Integration Tests."
+                        def logFile = "unit_integration_tests_log.txt"
+                        writeFile file: logFile, text: currentBuild.rawBuild.getLog(100).join("\n")
+                        archiveArtifacts artifacts: logFile, allowEmptyArchive: true
                         mail to: 'ypokia07@gmail.com',
                             subject: "Unit and Integration Tests Successful",
-                            body: "The unit and integration tests completed successfully.\n\nHere are the simulated logs:\n${log}"
+                            body: "The unit and integration tests completed successfully. Please find the logs attached.",
+                            attachmentsPattern: logFile
                     }
                 }
                 failure {
                     script {
-                        def log = "Simulated log output for Unit and Integration Tests."
+                        def logFile = "unit_integration_tests_log.txt"
+                        writeFile file: logFile, text: currentBuild.rawBuild.getLog(100).join("\n")
+                        archiveArtifacts artifacts: logFile, allowEmptyArchive: true
                         mail to: 'ypokia07@gmail.com',
                             subject: "Unit and Integration Tests Failed",
-                            body: "The unit and integration tests failed.\n\nHere are the simulated logs:\n${log}"
+                            body: "The unit and integration tests failed. Please find the logs attached.",
+                            attachmentsPattern: logFile
                     }
                 }
             }
@@ -46,18 +52,24 @@ pipeline {
             post {
                 success {
                     script {
-                        def log = "Simulated log output for Security Scan."
+                        def logFile = "security_scan_log.txt"
+                        writeFile file: logFile, text: currentBuild.rawBuild.getLog(100).join("\n")
+                        archiveArtifacts artifacts: logFile, allowEmptyArchive: true
                         mail to: 'ypokia07@gmail.com',
                             subject: "Security Scan Successful",
-                            body: "The security scan completed successfully.\n\nHere are the simulated logs:\n${log}"
+                            body: "The security scan completed successfully. Please find the logs attached.",
+                            attachmentsPattern: logFile
                     }
                 }
                 failure {
                     script {
-                        def log = "Simulated log output for Security Scan."
+                        def logFile = "security_scan_log.txt"
+                        writeFile file: logFile, text: currentBuild.rawBuild.getLog(100).join("\n")
+                        archiveArtifacts artifacts: logFile, allowEmptyArchive: true
                         mail to: 'ypokia07@gmail.com',
                             subject: "Security Scan Failed",
-                            body: "The security scan failed.\n\nHere are the simulated logs:\n${log}"
+                            body: "The security scan failed. Please find the logs attached.",
+                            attachmentsPattern: logFile
                     }
                 }
             }
