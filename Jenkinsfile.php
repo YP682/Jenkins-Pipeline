@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building...'
-                // Use 'bat' for Windows commands
+                // Use 'bat' for Windows commands if on Windows
                 bat 'mvn clean package'
             }
         }
@@ -17,18 +17,18 @@ pipeline {
             post {
                 success {
                     script {
-                        def log = currentBuild.getLog(100).join("\n")
+                        def log = currentBuild.getLog().join("\n")
                         mail to: 'ypokia07@gmail.com',
                             subject: "Unit and Integration Tests Successful",
-                            body: "The unit and integration tests completed successfully.\n\nHere are the last 100 lines of the log:\n${log}"
+                            body: "The unit and integration tests completed successfully.\n\nHere are the logs:\n${log}"
                     }
                 }
                 failure {
                     script {
-                        def log = currentBuild.getLog(100).join("\n")
+                        def log = currentBuild.getLog().join("\n")
                         mail to: 'ypokia07@gmail.com',
                             subject: "Unit and Integration Tests Failed",
-                            body: "The unit and integration tests failed. Please check the logs.\n\nHere are the last 100 lines of the log:\n${log}"
+                            body: "The unit and integration tests failed. Please check the logs.\n\nHere are the logs:\n${log}"
                     }
                 }
             }
@@ -47,18 +47,18 @@ pipeline {
             post {
                 success {
                     script {
-                        def log = currentBuild.getLog(100).join("\n")
+                        def log = currentBuild.getLog().join("\n")
                         mail to: 'ypokia07@gmail.com',
                             subject: "Security Scan Successful",
-                            body: "The security scan completed successfully.\n\nHere are the last 100 lines of the log:\n${log}"
+                            body: "The security scan completed successfully.\n\nHere are the logs:\n${log}"
                     }
                 }
                 failure {
                     script {
-                        def log = currentBuild.getLog(100).join("\n")
+                        def log = currentBuild.getLog().join("\n")
                         mail to: 'ypokia07@gmail.com',
                             subject: "Security Scan Failed",
-                            body: "The security scan failed. Please check the logs.\n\nHere are the last 100 lines of the log:\n${log}"
+                            body: "The security scan failed. Please check the logs.\n\nHere are the logs:\n${log}"
                     }
                 }
             }
@@ -89,18 +89,18 @@ pipeline {
         }
         success {
             script {
-                def log = currentBuild.getLog(100).join("\n")
+                def log = currentBuild.getLog().join("\n")
                 mail to: 'ypokia07@gmail.com',
                     subject: "Pipeline Successful: ${currentBuild.fullDisplayName}",
-                    body: "The pipeline has completed successfully.\n\nHere are the last 100 lines of the log:\n${log}"
+                    body: "The pipeline has completed successfully.\n\nHere are the logs:\n${log}"
             }
         }
         failure {
             script {
-                def log = currentBuild.getLog(100).join("\n")
+                def log = currentBuild.getLog().join("\n")
                 mail to: 'ypokia07@gmail.com',
                     subject: "Pipeline Failed: ${currentBuild.fullDisplayName}",
-                    body: "The pipeline has failed. Please check the logs.\n\nHere are the last 100 lines of the log:\n${log}"
+                    body: "The pipeline has failed. Please check the logs.\n\nHere are the logs:\n${log}"
             }
         }
     }
