@@ -14,7 +14,7 @@ pipeline {
                 echo 'Tool: JUnit for unit tests, TestNG for integration tests'
                 script {
                     // Capture the log output to a file
-                    sh 'echo Unit and Integration Tests Log > unit_integration_tests_log.txt'
+                    bat 'echo Unit and Integration Tests Log > unit_integration_tests_log.txt'
                 }
             }
             post {
@@ -24,7 +24,7 @@ pipeline {
                         mail to: 'ypokia07@gmail.com',
                             subject: "Unit and Integration Tests Successful",
                             body: "The unit and integration tests completed successfully. Please find the logs attached.",
-                            attachmentsPattern: 'unit_integration_tests_log.txt'
+                            attachments: 'unit_integration_tests_log.txt'
                     }
                 }
                 failure {
@@ -33,7 +33,7 @@ pipeline {
                         mail to: 'ypokia07@gmail.com',
                             subject: "Unit and Integration Tests Failed",
                             body: "The unit and integration tests failed. Please find the logs attached.",
-                            attachmentsPattern: 'unit_integration_tests_log.txt'
+                            attachments: 'unit_integration_tests_log.txt'
                     }
                 }
             }
@@ -50,7 +50,7 @@ pipeline {
                 echo 'Tool: OWASP Dependency-Check'
                 script {
                     // Capture the log output to a file
-                    sh 'echo Security Scan Log > security_scan_log.txt'
+                    bat 'echo Security Scan Log > security_scan_log.txt'
                 }
             }
             post {
@@ -60,7 +60,7 @@ pipeline {
                         mail to: 'ypokia07@gmail.com',
                             subject: "Security Scan Successful",
                             body: "The security scan completed successfully. Please find the logs attached.",
-                            attachmentsPattern: 'security_scan_log.txt'
+                            attachments: 'security_scan_log.txt'
                     }
                 }
                 failure {
@@ -69,7 +69,7 @@ pipeline {
                         mail to: 'ypokia07@gmail.com',
                             subject: "Security Scan Failed",
                             body: "The security scan failed. Please find the logs attached.",
-                            attachmentsPattern: 'security_scan_log.txt'
+                            attachments: 'security_scan_log.txt'
                     }
                 }
             }
