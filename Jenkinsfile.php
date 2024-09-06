@@ -23,22 +23,25 @@ pipeline {
                         archiveArtifacts artifacts: 'unit_integration_tests_log.txt', allowEmptyArchive: true
                         // Send email with the log file attached
                         emailext (
-                       to: 'ypokia07@gmail.com',
-                             subject: "Unit and Integration Tests Successful",
-                             body: "The unit and integration tests completed successfully. Please find the logs attached.",
-                             attachmentsPattern: 'unit_integration_tests_log.txt'
-)
-                    
-}
+                            to: 'ypokia07@gmail.com',
+                            subject: "Unit and Integration Tests Successful",
+                            body: "The unit and integration tests completed successfully. Please find the logs attached.",
+                            attachLog: true, // Attach logs directly
+                            attachmentsPattern: 'unit_integration_tests_log.txt'
+                        )
+                    }
                 }
                 failure {
                     script {
                         archiveArtifacts artifacts: 'unit_integration_tests_log.txt', allowEmptyArchive: true
                         // Send email with the log file attached
-                        emailext to: 'ypokia07@gmail.com',
-                             subject: "Unit and Integration Tests Failed",
-                             body: "The unit and integration tests failed. Please find the logs attached.",
-                             attachmentsPattern: 'unit_integration_tests_log.txt'
+                        emailext (
+                            to: 'ypokia07@gmail.com',
+                            subject: "Unit and Integration Tests Failed",
+                            body: "The unit and integration tests failed. Please find the logs attached.",
+                            attachLog: true, // Attach logs directly
+                            attachmentsPattern: 'unit_integration_tests_log.txt'
+                        )
                     }
                 }
             }
@@ -63,57 +66,16 @@ pipeline {
                     script {
                         archiveArtifacts artifacts: 'security_scan_log.txt', allowEmptyArchive: true
                         // Send email with the log file attached
-                        emailext to: 'ypokia07@gmail.com',
-                             subject: "Security Scan Successful",
-                             body: "The security scan completed successfully. Please find the logs attached.",
-                             attachmentsPattern: 'security_scan_log.txt'
+                        emailext (
+                            to: 'ypokia07@gmail.com',
+                            subject: "Security Scan Successful",
+                            body: "The security scan completed successfully. Please find the logs attached.",
+                            attachLog: true, // Attach logs directly
+                            attachmentsPattern: 'security_scan_log.txt'
+                        )
                     }
                 }
                 failure {
                     script {
                         archiveArtifacts artifacts: 'security_scan_log.txt', allowEmptyArchive: true
-                        // Send email with the log file attached
-                        emailext to: 'ypokia07@gmail.com',
-                             subject: "Security Scan Failed",
-                             body: "The security scan failed. Please find the logs attached.",
-                             attachmentsPattern: 'security_scan_log.txt'
-                    }
-                }
-            }
-        }
-        stage('Deploy to Staging') {
-            steps {
-                echo 'Task: Deploy the application to a staging server.'
-                echo 'Tool: AWS CLI'
-            }
-        }
-        stage('Integration Tests on Staging') {
-            steps {
-                echo 'Task: Run integration tests on the staging environment.'
-                echo 'Tool: Selenium'
-            }
-        }
-        stage('Deploy to Production') {
-            steps {
-                echo 'Task: Deploy the application to the production server.'
-                echo 'Tool: AWS CLI'
-            }
-        }
-    }
-    
-    post {
-        always {
-            echo 'Pipeline completed.'
-        }
-        success {
-            script {
-                echo "Pipeline Successful: ${currentBuild.fullDisplayName}"
-            }
-        }
-        failure {
-            script {
-                echo "Pipeline Failed: ${currentBuild.fullDisplayName}"
-            }
-        }
-    }
-}
+                        //
