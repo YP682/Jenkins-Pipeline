@@ -24,33 +24,28 @@ pipeline {
             post {
                 success {
                     script {
-                        archiveArtifacts artifacts: 'unit_integration_tests_log.txt', allowEmptyArchive: true
-                        echo 'Preparing to send success email with attachment for Unit and Integration Tests...'
-                        // Email with attached log file
+                        echo 'Preparing to send success email with console log attachment for Unit and Integration Tests...'
+                        // Email with Jenkins console log attached
                         emailext (
                             to: 'ypokia07@gmail.com',
                             subject: "Unit and Integration Tests Successful",
-                            body: "The unit and integration tests completed successfully. Logs are attached.",
-                            attachLog: true,
-                           // attachmentsPattern: '**/unit_integration_tests_log.txt', // Ensure the file is found
-                           // mimeType: 'text/plain'
+                            body: "The unit and integration tests completed successfully. The console log is attached.",
+                            attachLog: true // Attach Jenkins build logs (console output)
                         )
-                        echo 'Success email with attachment sent for Unit and Integration Tests.'
+                        echo 'Success email with console log attachment sent for Unit and Integration Tests.'
                     }
                 }
                 failure {
                     script {
-                        archiveArtifacts artifacts: 'unit_integration_tests_log.txt', allowEmptyArchive: true
-                        echo 'Preparing to send failure email with attachment for Unit and Integration Tests...'
-                        // Email with attached log file
+                        echo 'Preparing to send failure email with console log attachment for Unit and Integration Tests...'
+                        // Email with Jenkins console log attached
                         emailext (
                             to: 'ypokia07@gmail.com',
                             subject: "Unit and Integration Tests Failed",
-                            body: "The unit and integration tests failed. Logs are attached.",
-                            attachmentsPattern: '**/unit_integration_tests_log.txt', // Ensure the file is found
-                            mimeType: 'text/plain'
+                            body: "The unit and integration tests failed. The console log is attached.",
+                            attachLog: true // Attach Jenkins build logs (console output)
                         )
-                        echo 'Failure email with attachment sent for Unit and Integration Tests.'
+                        echo 'Failure email with console log attachment sent for Unit and Integration Tests.'
                     }
                 }
             }
@@ -77,32 +72,28 @@ pipeline {
             post {
                 success {
                     script {
-                        archiveArtifacts artifacts: 'security_scan_log.txt', allowEmptyArchive: true
-                        echo 'Preparing to send success email with attachment for Security Scan...'
-                        // Email with attached log file
+                        echo 'Preparing to send success email with console log attachment for Security Scan...'
+                        // Email with Jenkins console log attached
                         emailext (
                             to: 'ypokia07@gmail.com',
                             subject: "Security Scan Successful",
-                            body: "The security scan completed successfully. Logs are attached.",
-                            attachmentsPattern: '**/security_scan_log.txt', // Ensure the file is found
-                            mimeType: 'text/plain'
+                            body: "The security scan completed successfully. The console log is attached.",
+                            attachLog: true // Attach Jenkins build logs (console output)
                         )
-                        echo 'Success email with attachment sent for Security Scan.'
+                        echo 'Success email with console log attachment sent for Security Scan.'
                     }
                 }
                 failure {
                     script {
-                        archiveArtifacts artifacts: 'security_scan_log.txt', allowEmptyArchive: true
-                        echo 'Preparing to send failure email with attachment for Security Scan...'
-                        // Email with attached log file
+                        echo 'Preparing to send failure email with console log attachment for Security Scan...'
+                        // Email with Jenkins console log attached
                         emailext (
                             to: 'ypokia07@gmail.com',
                             subject: "Security Scan Failed",
-                            body: "The security scan failed. Logs are attached.",
-                            attachmentsPattern: '**/security_scan_log.txt', // Ensure the file is found
-                            mimeType: 'text/plain'
+                            body: "The security scan failed. The console log is attached.",
+                            attachLog: true // Attach Jenkins build logs (console output)
                         )
-                        echo 'Failure email with attachment sent for Security Scan.'
+                        echo 'Failure email with console log attachment sent for Security Scan.'
                     }
                 }
             }
@@ -143,5 +134,3 @@ pipeline {
         }
     }
 }
-
-
