@@ -16,6 +16,10 @@ pipeline {
                     // Capture the log output to a file
                     bat 'echo Unit and Integration Tests Log > unit_integration_tests_log.txt'
                 }
+                // Ensure the file is created
+                script {
+                    bat 'dir /B'
+                }
             }
             post {
                 success {
@@ -27,7 +31,7 @@ pipeline {
                             to: 'ypokia07@gmail.com',
                             subject: "Unit and Integration Tests Successful",
                             body: "The unit and integration tests completed successfully. Logs are attached.",
-                            attachmentsPattern: 'unit_integration_tests_log.txt',
+                            attachmentsPattern: '**/unit_integration_tests_log.txt', // Ensure the file is found
                             mimeType: 'text/plain'
                         )
                         echo 'Success email with attachment sent for Unit and Integration Tests.'
@@ -42,7 +46,7 @@ pipeline {
                             to: 'ypokia07@gmail.com',
                             subject: "Unit and Integration Tests Failed",
                             body: "The unit and integration tests failed. Logs are attached.",
-                            attachmentsPattern: 'unit_integration_tests_log.txt',
+                            attachmentsPattern: '**/unit_integration_tests_log.txt', // Ensure the file is found
                             mimeType: 'text/plain'
                         )
                         echo 'Failure email with attachment sent for Unit and Integration Tests.'
@@ -64,6 +68,10 @@ pipeline {
                     // Capture the log output to a file
                     bat 'echo Security Scan Log > security_scan_log.txt'
                 }
+                // Ensure the file is created
+                script {
+                    bat 'dir /B'
+                }
             }
             post {
                 success {
@@ -75,7 +83,7 @@ pipeline {
                             to: 'ypokia07@gmail.com',
                             subject: "Security Scan Successful",
                             body: "The security scan completed successfully. Logs are attached.",
-                            attachmentsPattern: 'security_scan_log.txt',
+                            attachmentsPattern: '**/security_scan_log.txt', // Ensure the file is found
                             mimeType: 'text/plain'
                         )
                         echo 'Success email with attachment sent for Security Scan.'
@@ -90,7 +98,7 @@ pipeline {
                             to: 'ypokia07@gmail.com',
                             subject: "Security Scan Failed",
                             body: "The security scan failed. Logs are attached.",
-                            attachmentsPattern: 'security_scan_log.txt',
+                            attachmentsPattern: '**/security_scan_log.txt', // Ensure the file is found
                             mimeType: 'text/plain'
                         )
                         echo 'Failure email with attachment sent for Security Scan.'
@@ -134,4 +142,5 @@ pipeline {
         }
     }
 }
+
 
