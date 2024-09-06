@@ -31,8 +31,9 @@ pipeline {
                             to: 'ypokia07@gmail.com',
                             subject: "Unit and Integration Tests Successful",
                             body: "The unit and integration tests completed successfully. Logs are attached.",
-                            attachmentsPattern: '**/unit_integration_tests_log.txt', // Ensure the file is found
-                            mimeType: 'text/plain'
+                            attachLog: true,
+                           // attachmentsPattern: '**/unit_integration_tests_log.txt', // Ensure the file is found
+                           // mimeType: 'text/plain'
                         )
                         echo 'Success email with attachment sent for Unit and Integration Tests.'
                     }
