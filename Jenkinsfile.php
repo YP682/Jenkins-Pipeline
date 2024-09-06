@@ -22,11 +22,14 @@ pipeline {
                     script {
                         archiveArtifacts artifacts: 'unit_integration_tests_log.txt', allowEmptyArchive: true
                         // Send email with the log file attached
-                        emailext to: 'ypokia07@gmail.com',
+                        emailext (
+                       to: 'ypokia07@gmail.com',
                              subject: "Unit and Integration Tests Successful",
                              body: "The unit and integration tests completed successfully. Please find the logs attached.",
                              attachmentsPattern: 'unit_integration_tests_log.txt'
-                    }
+)
+                    
+}
                 }
                 failure {
                     script {
